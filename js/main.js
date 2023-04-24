@@ -79,7 +79,7 @@ function verPresupuesto() {
     const div = document.createElement(`div`);
     div.innerHTML = ` 
     
-    <div class="card m-2 p-5 ">
+    <div class="card m-2 p-5 col-xl-3 col-m-6 col-sm-12" >
       <p>Nuevo marco: ${marco.nombreCliente}   </p>
       <p>medidas: ${marco.largo} x ${marco.ancho}</p>
       <p>moldura: ${marco.molduraSeleccionada.nombre}</p>
