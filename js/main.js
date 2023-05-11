@@ -1,77 +1,97 @@
-const productos = [
-    {
-        id: "grabado1",
-        titulo: "Uno",
-        imagen: "./img-gr/gr1.jpg",
-        precio: 500,
-        tamanio: "25 x 14"
-    },
-
-    {
-        id: "grabado2",
-        titulo: "Encuentro Color",
-        imagen: "./img-gr/gr2.jpg",
-        precio: 800,
-        tamanio: "48 x 54"
-    },
-
-    {
-        id: "grabado3",
-        titulo: "Espejo",
-        imagen: "./img-gr/gr3.jpg",
-        precio: 400,
-        tamanio: "25 x 14"
-    },
-
-    {
-        id: "grabado4",
-        titulo: "Encuentro",
-        imagen: "./img-gr/gr1.jpg",
-        precio: 700,
-        tamanio: "48 x 54"
-    },
-
-    {
-        id: "grabado5",
-        titulo: "Valizas",
-        imagen: "./img-gr/gr5.jpg",
-        precio: 400,
-        tamanio: "14 x 14"
-    },
-
-    {
-        id: "grabado6",
-        titulo: "xilografía 1",
-        imagen: "./img-gr/gr6.jpg",
-        precio: 500,
-        tamanio: "25 x 14"
-    }
-]
-
-
-const contenedorProductos = document.querySelector("#contenedor-productos")
-
-function cargarProductos() {
-
-    productos.forEach(producto => {
-
-        const div = document.createElement("div");
-        div.classList.add("producto");
-        div.innerHTML = `
-        <div class="col-xl-4 col-md-6 col-sm-12 p-2 pb-4 text-center">
-                        <img class="producto-imagen img-fluid" src"${producto.imagen}" alt="${producto.titulo}">
-                        <div class="producto-detalles">
-                            <h3 class="producto-titulo py-1">${producto.titulo}</h3>
-                            <p class="producto-precio py-1">$${producto.precio}</p>
-                            <p class="producto-tamanio py-1">${producto.tamanio}</p>
-                            <button class="btn btn-info producto-agregar" id="${producto.id}">Agregar</button>
-                        </div>
-                    </div>
-        
-        `;
-        contenedorProductos.append(div);
-
-    })
+class producto {
+  constructor(id, titulo, imagen, precio, tamanio) {
+    this.id = id;
+    this.titulo = titulo;
+    this.imagen = imagen;
+    this.precio = precio;
+    this.tamanio = tamanio;
+    this.cantidad = 1;
+  }
 }
 
-cargarProductos()
+const uno = new producto("g1", "Uno", "./img-gr/gr1.jpg", 500, "25 x 14");
+const encuentro_color = new producto(
+  "g2",
+  "Encuentro color",
+  "./img-gr/gr2.jpg",
+  800,
+  "48 x 54"
+);
+const espejo = new producto("g3", "Espejo", "./img-gr/gr3.jpg", 400, "25 x 14");
+const encuentro = new producto(
+  "g4",
+  "Encuentro",
+  "./img-gr/gr4.jpg",
+  700,
+  "48 x 54"
+);
+const valizas = new producto(
+  "g5",
+  "Valizas",
+  "./img-gr/gr5.jpg",
+  400,
+  "14 x 14"
+);
+const sauce = new producto("g6", "Sauce", "./img-gr/gr6.jpg", 700, "25 x 14");
+const vuelvo = new producto("g7", "Vuelvo", "./img-gr/gr7.jpg", 400, "15 x 25");
+const punio = new producto("g8", "Puño", "./img-gr/gr8.jpg", 400, "14 x 14");
+
+const productos = [
+  uno,
+  encuentro_color,
+  espejo,
+  encuentro,
+  valizas,
+  sauce,
+  vuelvo,
+  punio,
+];
+
+let carrito = [];
+
+const contenedorProductos = document.querySelector("#contenedor-productos");
+function cargarProductos() {
+  productos.forEach((producto) => {
+    const div = document.createElement("div");
+    div.classList.add(
+      "producto",
+      "col-xl-4",
+      "col-md-6",
+      "col-sm-12",
+      "p-2",
+      "pb-4",
+      "text-center"
+    );
+    div.innerHTML = `
+                        <img class="producto-imagen img-fluid" src="${producto.imagen}" alt="${producto.titulo}">
+                        <div class="producto-detalles">
+                            <h4 class="producto-titulo py-2">${producto.titulo}</h3>
+                            <p class="producto-precio py-1">$${producto.precio}</p>
+                            <p class="producto-tamanio py-1">${producto.tamanio}</p>
+                            <button class="btn btn-info" id="boton${producto.id}">Agregar</button>
+                        </div>
+        `;
+    contenedorProductos.append(div);
+
+    // agregar productos al Carrito
+
+    const boton = document.getElementById(`boton${producto.id}`);
+    boton.addEventListener("click", () => {
+      agregarAlCarrito(producto.id);
+    });
+  });
+}
+cargarProductos();
+
+const agregarAlCarrito = (id) => {
+  const productoEnCarrito = carrito.find((producto) => producto.id === id);
+  if (productoEnCarrito) {
+    productoEnCarrito.cantidad++;
+  } else {
+    const producto = productos.find((producto) => producto.id === id);
+    carrito.push(producto);
+  }
+};
+
+console.log(productos);
+console.log(carrito);
