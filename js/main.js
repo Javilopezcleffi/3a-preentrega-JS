@@ -81,6 +81,14 @@ function cargarProductos() {
     });
   });
 }
+
+const carritoLS = JSON.parse(localStorage.getItem("productos-en-carrito"));
+if (carritoLS) {
+  carrito = carritoLS;
+} else {
+  carrito = [];
+}
+
 cargarProductos();
 
 const agregarAlCarrito = (id) => {
@@ -92,58 +100,23 @@ const agregarAlCarrito = (id) => {
     carrito.push(producto);
   }
 
-  console.log(carrito);
+  localStorage.setItem("productos-en-carrito", JSON.stringify(carrito));
 };
 
 // Mostrar el carrito
 
-const carritoProductos = document.getElementById("carritoProductos");
+// const carritoProductos = document.getElementById("carritoProductos");
 
-const mostrarCarrito = () => {
-  carrito.forEach((producto) => {
-    const card = document.createElement("div");
-    card.classList.add(
-      "col-xl-3",
-      "col-md-3",
-      "col-sm-6",
-      "p-3",
-      "card",
-      "mx-2"
-    );
-    card.innerHTML = `
-                                <img class="carrito-producto-imagen img-fluid" src="${
-                                  producto.imagen
-                                }"
-                                    alt="${producto.titulo}">
-                                <div class="carrito-producto-titulo">
-                                    <small>título</small>
-                                    <h5>${producto.titulo}</h5>
-                                </div>
-                                <div class="carrito-producto-cantidad">
-                                    <small>Cantidad</small>
-                                    <p>${producto.cantidad}</p>
-                                </div>
-                                <div class="carrito-producto-tamanio">
-                                    <small>Tamaño</small>
-                                    <p>${producto.tamanio}</p>
-                                </div>
-                                <div class="carrito-producto-precio">
-                                    <small>Precio</small>
-                                    <p>${producto.precio}</p>
-                                </div>
-                                <div class="carrito-producto-subtotal">
-                                    <small>Subtotal</small>
-                                    <p>$${
-                                      producto.precio * producto.cantida
-                                    }</p>
-                                </div>
-                                <button class="btn btn-outline-info carrito-producto-eliminar mx-5 mt-3" id="eliminar${
-                                  producto.id
-                                }"><i
-                                        class="bi bi-trash-fill"></i></button>
-                                        `;
-    carritoProductos.appendChild(card);
-  });
-};
+// const mostrarCarrito = () => {
+//   carrito.forEach((producto) => {
+//     const card = document.createElement("div");
 
-mostrarCarrito();
+//     card.classList.add(
+
+//     );
+//     card.innerHTML =
+//     carritoProductos.appendChild(card);
+//   });
+// };
+
+// mostrarCarrito();
